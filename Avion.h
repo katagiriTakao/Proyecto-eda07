@@ -10,8 +10,14 @@ typedef int ItemI;
 
 typedef struct
 {
+	int pasajeros;
+	int capacidad;
+	bool estado:
+	char hora_llegada[];
+	char hora_salida[];
+	
 	SLL* stack;
-} Stack;
+} Avion;
 
 typedef Avion* AvionPtr;
 
