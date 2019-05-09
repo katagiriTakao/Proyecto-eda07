@@ -49,13 +49,13 @@ bool   DLL_InsertAfter( DLL* this, Item _data );
 bool   DLL_InsertBefore(DLL* this, Item _data );
 /**Extrae el elemento a la izquierda de donde apunte cursor.
 */
-bool   DLL_Remove(      DLL* this, ItemPtr _data_back );
+bool   DLL_Remove(      DLL* this);
 /**Extrae un elemento del front de la lista
 */
-bool   DLL_RemoveFront( DLL* this, ItemPtr _data_back );
+bool   DLL_RemoveFront( DLL* this);
 /**Extrae un elemento del back de la lista.
 */
-bool   DLL_RemoveBack(  DLL* this, ItemPtr _data_back );
+bool   DLL_RemoveBack(  DLL* this);
 /**Extrae el elemento a la derecha de donde apunte cursor
 */
 bool   DLL_RemoveAfter( DLL* this, ItemPtr _data_back );
@@ -93,7 +93,7 @@ void   DLL_CursorPrev(  DLL* this );
 contrario devuelve false. El cursor no es afectado. Esta función se utiliza cuando
 únicamente queremos saber si un valor está en la lista o no.
 */
-//bool   DLL_FindIf(      DLL* this, Item _key );
+bool DLL_FindIf( DLL* this, Item _key, bool (*cmp)(Item s0, Item s1) );
 /**Recorre la lista buscando una coincidencia. Si la encuentra devuelve true y coloca al
 cursor en la posición correspondiente; en caso contrario devuelve false y el cursor no se
 modifica. Esta función se utiliza cuando queremos accesar, insertar a la derecha o

@@ -5,14 +5,14 @@
 
 typedef struct
 {
-	char _nombre[10];
-	char pasajeros[10];
-	char capacidad[10];
-	char estado[10];
-	char hora_llegada[10];
-	char hora_salida[10];
-	
-} Avion;
+	char _nombre[20];
+	char pasajeros[20];
+	char capacidad[20];
+	char estado[20];
+	char hora_salida[20];
+	char hora_llegada[20];
+
+}Avion;
 
 //typedef Avion* AvionPtr;
 

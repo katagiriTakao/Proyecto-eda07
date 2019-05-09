@@ -2,8 +2,6 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <stdio.h>
-
-#include "Avion.h"
 #include "DLL.h"
 
 void imprime( Item item )
@@ -12,8 +10,9 @@ void imprime( Item item )
   printf( "Pasajeros: %s\n",item.pasajeros);
   printf( "Capacidad: %s\n", item.capacidad);
   printf( "Estado: %s\n", item.estado);
-  printf( "Hora llegado: %s\n", item.hora_llegada);
   printf( "Hora salida: %s\n", item.hora_salida);
+  printf( "Hora llegada: %s\n", item.hora_llegada);
+  printf("\n\n");
 
 }
 
@@ -24,16 +23,14 @@ int menu()
     {
         printf( "\n"
 
-                "1) Ver aviones\n"
-                "2) Eliminar un avion\n"
+                "1) Aviones para aterrizaje\n"
+                "2) Aviones para despegue\n"
                 "3) Ver lista de aviones disponibles\n"
-                "4) Ver lista de aviones dañados\n"
-                "5) Arreglar un avion\n"
-                "6) Asignar horario\n"
-                "7) Fenomeno meterologico\n"
-                "8) Solicitar despegue \n"
-                "9) Autorizar despegue\n"
-                "10) Buscar un avion\n"
+                "4) Ver lista de aviones danados\n"
+                "5) Solicitar aterrizaje\n"
+                "6) Autorizar aterrizaje\n"
+                "7) Solcitar despegue\n"
+                "8) Autorizar despeque\n"
                 "0) Salir\n"
          	 );
 
@@ -41,7 +38,7 @@ int menu()
         printf("Selecciona una opcion: ");
         scanf( "%d", &opcion );
 
-        if( 0 <= opcion && opcion <= 10) { 
+        if( 0 <= opcion && opcion <= 8) { 
             return opcion; 
         }else{ printf( "Opcion no reconocida.\n" ); }
     }
@@ -49,55 +46,73 @@ int menu()
 
 int main(void){
     
-    char nombre[10]="Boing123";
-    char estado[10]="Ocupado";
-    char h_ll[10]="10:20";
-    char h_s[10]="12:25";
-    char pasajeros[10]="150";
-    char capacidad[10]="220";
+    DLL* danados=DLL_New();
+    DLL* disponible=DLL_New();
+    DLL* entrada=DLL_New();
+    DLL* salida=DLL_New();
 
-    DLL* lista=DLL_New();
+    Item avi1=(Avion){"BoingMX2","0","250","Danado","",""};
+    Item avi2=(Avion){"Airbus280","0","350","Danado","",""};
+    Item avi3=(Avion){"Latam100","0","300","Danado","",""};
+    DLL_InsertFront( danados, avi1);
+    DLL_InsertFront( danados, avi2);
+    DLL_InsertFront( danados, avi3);
 
-    DLL_InsertBack( lista, (struct Avion){nombre,pasajeros,capacidad,estado,h_ll,h_s} );
+    Item avi4=(Avion){"BoingMZY","0","250","Disponible","",""};
+    Item avi5=(Avion){"Airbus760","0","400","Disponible","",""};
+    Item avi6=(Avion){"LatamSUR7","0","300","Disponible","",""};
+    DLL_InsertFront( disponible, avi4);
+    DLL_InsertFront( disponible, avi5);
+    DLL_InsertFront( disponible, avi6);
 
-    DLL_Traverse( lista, imprime);
+    Item avi7=(Avion){"Aero1","150","300","Ocupado","10:20","12:10"};
+    Item avi8=(Avion){"Aero2","250","300","Ocupado","10:40","11:30"};
+    DLL_InsertFront( entrada, avi7);
+    DLL_InsertFront( entrada, avi8);
 
+    Item avi9=(Avion){"Aero3","100","300","Ocupado","13:30","17:40"};
+    Item avi10=(Avion){"Aero4","100","200","Ocupado","13:50","18:30"};
+    DLL_InsertFront(salida, avi9);
+    DLL_InsertFront(salida, avi10);
 
-    /*while (1)
+    while (1)
    {
            
         switch( menu() ){
 
             case 1:
                 {
-                    printf("\n1...\n");
-                    Aviones_Imprimir(avion1);
+                    printf("Proximos arrivos: \n");
+                    DLL_Traverse( entrada, imprime);
                    
                     break;
                 }
                 
             case 2:
                 {
-                    printf("\n2...\n");
-                    Avion_eliminar(avion1);
+                    printf("Proximos despegues: \n");
+                    DLL_Traverse( salida, imprime);
+                   
 
                     break;
                 }
 
             case 3:
                 {
-                    printf("\n3...\n");    
+                    printf("Aviones disponibles: \n");
+                    DLL_Traverse( disponible, imprime);    
                     break;
                 }
                 
             case 4:
                 {
-                    printf("\n4...\n");
+                    printf("Aviones danados: \n");
+                    DLL_Traverse( danados, imprime);
                     break;
                 }   
             case 5:
                 { 
-                    printf("\n5...\n");
+                    printf("");
                    
                     break;
                 }   
@@ -113,32 +128,17 @@ int main(void){
                    
                     break;
                 }
-                    
-            case 8:
-                {
-
-                    printf("\n8...\n");
-                    break;
-                }
-            case 9:
-                {
-                    printf("\n9...\n");
-                    break; 
-                }
-                     
-            case 10:
-                { 
-                    printf("\n10...\n");
-                    
-                    break;
-                }
-
+           
             case 0:
                 {
-                   
-                
+                    //liberando memoria
+                    DLL_Delete(danados);
+                    DLL_Delete(disponible);
+                    DLL_Delete(entrada);
+                    DLL_Delete(salida);
+
                     return 0;
-                    printf("Se libero memoria");
+                 
                 }
 
             default:
@@ -147,9 +147,6 @@ int main(void){
         }
     
     }
-
-    */
-
 
 
     return 0;

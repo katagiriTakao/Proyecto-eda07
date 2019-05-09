@@ -128,7 +128,7 @@ bool DLL_InsertBefore( DLL* this, Item _data )
 
 }
 
-bool DLL_Remove( DLL* this, ItemPtr _data_back )
+bool DLL_Remove( DLL* this)
 {
 	assert( this );
 
@@ -137,7 +137,7 @@ bool DLL_Remove( DLL* this, ItemPtr _data_back )
 	if( !DLL_IsEmpty( this ) && NULL != this->cursor ){
 		done = true; 
 
-		*_data_back = this->cursor->data;
+		//_data_back = this->cursor->data;
 
 		NodePtr left = this->cursor->prev;
 		NodePtr right = this->cursor->next;
@@ -155,7 +155,7 @@ bool DLL_Remove( DLL* this, ItemPtr _data_back )
 	return done;
 }
 
-bool DLL_RemoveFront( DLL* this, ItemPtr _data_back )
+bool DLL_RemoveFront( DLL* this)
 {
 	assert( this );
 
@@ -163,7 +163,7 @@ bool DLL_RemoveFront( DLL* this, ItemPtr _data_back )
 
 	if( !DLL_IsEmpty( this ) ){
 		done = true;
-		*_data_back = this->first->data;
+		//*_data_back = this->first->data;
 		NodePtr tmp = this->first->next;
 		free( this->first );
 		this->first = tmp;
@@ -178,7 +178,7 @@ bool DLL_RemoveFront( DLL* this, ItemPtr _data_back )
 	return done;
 }
 
-bool DLL_RemoveBack( DLL* this, ItemPtr _data_back )
+bool DLL_RemoveBack( DLL* this)
 {
     assert( this );
 	bool done = false;
@@ -187,11 +187,11 @@ bool DLL_RemoveBack( DLL* this, ItemPtr _data_back )
 		done = true;
 		//solo un elemento
 		if(this->first == this->last){
-			*_data_back = this->first->data;
+			//*_data_back = this->first->data;
 			reset(this);
 		}else{
 
-			*_data_back = this->last->data;
+			//*_data_back = this->last->data;
 			NodePtr tmp = this->last->prev;
 			free(this->last);
 			this->last=tmp;	
@@ -328,7 +328,7 @@ void DLL_CursorPrev( DLL* this )
 	}
 }
 
-bool DLL_FindIf( DLL* this, Item _key )
+/*bool DLL_FindIf( DLL* this, Item _key )
 {
 	assert( this );
 
@@ -341,8 +341,22 @@ bool DLL_FindIf( DLL* this, Item _key )
 		}
 	}
 	return found;
+}*/
+
+bool DLL_FindIf( DLL* this, Item _key, bool (*cmp)(Item, Item) )
+{
+  assert( this );
+  bool found = false;
+  for( NodePtr it = this->first; it != NULL; it = it->next ){
+	if( cmp( it->data, _key ) ){
+	found = true;
+	break;
+	}
+  }
+  return found;
 }
 
+/*
 bool DLL_Search( DLL* this, Item _key )
 {
    assert(this);
@@ -363,7 +377,7 @@ bool DLL_Search( DLL* this, Item _key )
 
     }
    return encontrado;
-}
+}*/
 
 void DLL_Traverse(DLL* this, void (*pfun)(Item) )
 {
