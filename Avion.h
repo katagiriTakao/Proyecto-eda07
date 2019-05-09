@@ -1,29 +1,25 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
-
-#include "SLL.h"
-// una SLL se utilizará como estructura de datos subyacente
-
-typedef char ItemC;
-typedef int ItemI;
+#include <stdio.h>
 
 typedef struct
 {
-	int pasajeros;
-	int capacidad;
-	bool estado:
-	char hora_llegada[];
-	char hora_salida[];
+	char _nombre[10];
+	char pasajeros[10];
+	char capacidad[10];
+	char estado[10];
+	char hora_llegada[10];
+	char hora_salida[10];
 	
-	SLL* stack;
 } Avion;
 
-typedef Avion* AvionPtr;
+//typedef Avion* AvionPtr;
 
-AvionPtr Avion_New(      size_t _capacidad);
-void     Avion_eliminar(   AvionPtr this );
-void     Avion_llenar(     AvionPtr this, Item _data );
+/*AvionPtr Avion_New(ItemC* _nombre,ItemC* _pasajeros, ItemC* capacidad, ItemC* estado,ItemC* h_ll, ItemC* h_s);
+void 	 Avion_eliminar(   AvionPtr this );
+void 	 Aviones_Imprimir();*/
+/*void     Avion_llenar(     AvionPtr this, Item _data );
 char     Avion_extraer(      AvionPtr this );
 char     Avion_Peek(     AvionPtr this );//Devuelve todo los datos del avion
 bool     Avion_IsEmpty(  AvionPtr this );
@@ -31,4 +27,4 @@ void     Avion_vaciar( AvionPtr this);
 size_t   Avion_Len(      AvionPtr this );
 size_t   Avion_Capacity( AvionPtr this );
 bool     Avion_IsFull(   AvionPtr this );
-bool     Avion_chocar ( AvionPtr this);
+bool     Avion_chocar ( AvionPtr this);*/
