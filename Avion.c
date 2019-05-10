@@ -1,5 +1,10 @@
 //API del avion
-//#include "Avion.h"
+#include "Avion.h"
+/*
+DLL* danados=DLL_New();
+DLL* disponible=DLL_New();
+DLL* entrada=DLL_New();
+DLL* salida=DLL_New();
 
 AvionPtr Avion_New(ItemC* _nombre,ItemI pasajeros, ItemI capacidad, ItemC* estado,ItemC* h_ll, ItemC* h_s){
 
@@ -9,6 +14,7 @@ AvionPtr Avion_New(ItemC* _nombre,ItemI pasajeros, ItemI capacidad, ItemC* estad
 
         if( avi->avion ){
         
+           
            DLL_InsertFront(avi->avion,_nombre);
            DLL_InsertFront(avi->avion,pasajeros);
            DLL_InsertFront(avi->avion,capacidad);
@@ -21,9 +27,32 @@ AvionPtr Avion_New(ItemC* _nombre,ItemI pasajeros, ItemI capacidad, ItemC* estad
     return avi;
 
 
+}*/
+
+
+void imprime( Item item )
+{
+  printf( "Nombre: %s\n", item._nombre);
+  printf( "Pasajeros: %s\n",item.pasajeros);
+  printf( "Capacidad: %s\n", item.capacidad);
+  printf( "Estado: %s\n", item.estado);
+  printf( "Hora salida: %s\n", item.hora_salida);
+  printf( "Hora llegada: %s\n", item.hora_llegada);
+  printf("\n\n");
+
 }
 
-void    Avion_eliminar(   AvionPtr this ){
+void Avion_Print(ItemPtr this ){
+
+   if(DLL_IsEmpty(this->plane)==true){
+        printf("Empty set");
+   }else{
+        DLL_Traverse(this->plane,imprime);
+   }
+   
+}
+
+/*void    Avion_eliminar(   AvionPtr this ){
       if( this ){
         DLL_Delete( this->avion );
         free( this );
@@ -49,4 +78,4 @@ void Aviones_Imprimir(AvionPtr this ){
         DLL_Traverse(this->avion,imprime);
    }
    
-}
+}*/

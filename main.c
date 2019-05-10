@@ -13,7 +13,6 @@ void imprime( Item item )
   printf( "Hora salida: %s\n", item.hora_salida);
   printf( "Hora llegada: %s\n", item.hora_llegada);
   printf("\n\n");
-
 }
 
 //Funcion menu
@@ -23,15 +22,15 @@ int menu()
     {
         printf( "\n"
 
-                "1) Aviones para aterrizaje\n"
-                "2) Aviones para despegue\n"
-                "3) Ver lista de aviones disponibles\n"
-                "4) Ver lista de aviones danados\n"
-                "5) Solicitar aterrizaje\n"
-                "6) Autorizar aterrizaje\n"
-                "7) Solcitar despegue\n"
-                "8) Autorizar despeque\n"
-                "0) Salir\n"
+                "\t\t\t1) Aviones para aterrizaje\n"
+                "\t\t\t2) Aviones para despegue\n"
+                "\t\t\t3) Ver lista de aviones disponibles\n"
+                "\t\t\t4) Ver lista de aviones danados\n"
+                "\t\t\t5) Solicitar aterrizaje\n"
+                "\t\t\t6) Autorizar aterrizaje\n"
+                "\t\t\t7) Solicitar despegue\n"
+                "\t\t\t8) Autorizar despeque\n"
+                "\t\t\t0) Salir\n"
          	 );
 
         int opcion;
@@ -50,6 +49,7 @@ int main(void){
     DLL* disponible=DLL_New();
     DLL* entrada=DLL_New();
     DLL* salida=DLL_New();
+    DLL* sol_entrada=DLL_New();
 
     Item avi1=(Avion){"BoingMX2","0","250","Danado","",""};
     Item avi2=(Avion){"Airbus280","0","350","Danado","",""};
@@ -65,8 +65,8 @@ int main(void){
     DLL_InsertFront( disponible, avi5);
     DLL_InsertFront( disponible, avi6);
 
-    Item avi7=(Avion){"Aero1","150","300","Ocupado","10:20","12:10"};
-    Item avi8=(Avion){"Aero2","250","300","Ocupado","10:40","11:30"};
+    Item avi7=(Avion){"Aero1","150","300","Ocupado","10:20","11:30"};
+    Item avi8=(Avion){"Aero2","250","300","Ocupado","10:40","12:20"};
     DLL_InsertFront( entrada, avi7);
     DLL_InsertFront( entrada, avi8);
 
@@ -75,60 +75,13 @@ int main(void){
     DLL_InsertFront(salida, avi9);
     DLL_InsertFront(salida, avi10);
 
+    printf("\t\tSISTEMA DE ADMINISTRACION AEROPORTUARIA TORRE DE CONTROL\n\n");
+
+
     while (1)
-   {
-           
+   {  
         switch( menu() ){
 
-            case 1:
-                {
-                    printf("Proximos arrivos: \n");
-                    DLL_Traverse( entrada, imprime);
-                   
-                    break;
-                }
-                
-            case 2:
-                {
-                    printf("Proximos despegues: \n");
-                    DLL_Traverse( salida, imprime);
-                   
-
-                    break;
-                }
-
-            case 3:
-                {
-                    printf("Aviones disponibles: \n");
-                    DLL_Traverse( disponible, imprime);    
-                    break;
-                }
-                
-            case 4:
-                {
-                    printf("Aviones danados: \n");
-                    DLL_Traverse( danados, imprime);
-                    break;
-                }   
-            case 5:
-                { 
-                    printf("");
-                   
-                    break;
-                }   
-
-            case 6:
-                {
-                    printf("\n6...\n");
-                    break;
-                }       
-            case 7:
-                { 
-                    printf("\n7...\n");
-                   
-                    break;
-                }
-           
             case 0:
                 {
                     //liberando memoria
@@ -136,11 +89,81 @@ int main(void){
                     DLL_Delete(disponible);
                     DLL_Delete(entrada);
                     DLL_Delete(salida);
+                    DLL_Delete(sol_entrada);
 
                     return 0;
-                 
                 }
+            case 1:
+                {
+                    printf("\t\tProximos arrivos: \n");
+                    DLL_Traverse( entrada, imprime);
+                    break;
+                }  
+            case 2:
+                {
+                    printf("\t\tProximos despegues: \n");
+                    DLL_Traverse( salida, imprime);
+                    break;
+                }
+            case 3:
+                {
+                    printf("\t\tAviones disponibles: \n");
+                    DLL_Traverse( disponible, imprime);    
+                    break;
+                }
+            case 4:
+                {
+                    printf("\t\tAviones danados: \n");
+                    DLL_Traverse( danados, imprime);
+                    break;
+                }   
+            case 5:
+                { 
+                    printf("\t\tSolicitar aterrizaje: \n");
+                    DLL_CursorLast(entrada);
+                    Item enter;
+                    DLL_Peek(entrada,&enter);
+                    imprime(enter);
 
+                    int otc;
+                    printf("Solicitar aterrizaje: (Si=1)");
+                    scanf("%d",&otc);
+                    if(otc==1){
+                        Item solicitado;
+                        DLL_RemoveBack(entrada,&solicitado);
+                        DLL_InsertFront(sol_entrada,solicitado);
+                    }
+                        
+                    break;
+                }   
+            case 6:
+                {
+                    printf("\t\tAutorizar aterrizaje: \n");
+                    DLL_Traverse(sol_entrada,imprime);
+                    int otc2;
+                    printf("Aceptar solicitud de aterrizaje: (Si=1)");
+                    scanf("%d",&otc2);
+                    if(otc2==1){
+                        Item autorizado;
+                        DLL_RemoveBack(sol_entrada,&autorizado);
+                        //limpiar pasajeros, horarios, estado
+                        DLL_InsertFront(disponible,autorizado);
+                    }
+                    break;
+                }       
+            case 7:
+                { 
+                    printf("\t\tSolicitar despegue: \n");
+                   
+                    break;
+                }
+           
+            case 8:
+                {
+                    printf("\t\tAutorizar despegue: \n");
+                    break;
+                }
+            
             default:
                 printf( "Opcion no reconocida\n" );
                 break;

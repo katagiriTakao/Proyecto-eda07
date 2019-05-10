@@ -14,8 +14,19 @@ typedef struct
 
 }Avion;
 
-//typedef Avion* AvionPtr;
+typedef Avion Item;
+typedef Item* ItemPtr;
 
+
+
+
+
+
+
+
+
+
+//void Avion_Print( ItemPtr this );
 /*AvionPtr Avion_New(ItemC* _nombre,ItemC* _pasajeros, ItemC* capacidad, ItemC* estado,ItemC* h_ll, ItemC* h_s);
 void 	 Avion_eliminar(   AvionPtr this );
 void 	 Aviones_Imprimir();*/

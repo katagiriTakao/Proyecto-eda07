@@ -6,9 +6,6 @@
 
 #include "Avion.h"
 
-typedef Avion Item;
-typedef Item* ItemPtr;
-
 ///Estructura de nodos contenedores
 typedef struct Node     
 {
@@ -49,13 +46,13 @@ bool   DLL_InsertAfter( DLL* this, Item _data );
 bool   DLL_InsertBefore(DLL* this, Item _data );
 /**Extrae el elemento a la izquierda de donde apunte cursor.
 */
-bool   DLL_Remove(      DLL* this);
+bool   DLL_Remove(      DLL* this, ItemPtr _data_back );
 /**Extrae un elemento del front de la lista
 */
-bool   DLL_RemoveFront( DLL* this);
+bool   DLL_RemoveFront( DLL* this, ItemPtr _data_back );
 /**Extrae un elemento del back de la lista.
 */
-bool   DLL_RemoveBack(  DLL* this);
+bool   DLL_RemoveBack(  DLL* this, ItemPtr _data_back );
 /**Extrae el elemento a la derecha de donde apunte cursor
 */
 bool   DLL_RemoveAfter( DLL* this, ItemPtr _data_back );
